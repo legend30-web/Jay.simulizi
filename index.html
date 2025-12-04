@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐎𝐓𝐇𝐄𝐑 - 𝐂𝐇𝐀𝐍𝐍𝐄𝐋𝐒</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>JAY SIMULIZI - Ngano na Hadithi</title>
     <style>
         * {
             margin: 0;
@@ -12,674 +11,458 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, #0c0c0c, #1a1a2e, #16213e);
             color: white;
-            overflow-x: hidden;
             min-height: 100vh;
-            padding-bottom: 120px;
+            overflow-x: hidden;
         }
-
-        /* Particle Container */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        /* Welcome Screen */
-        #welcome-screen {
+        
+        /* Animation ya kuanzia */
+        .welcome-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, #0f3460, #1a1a2e, #16213e);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 400% 400%;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            transition: opacity 1.5s ease, transform 1.5s ease;
+            z-index: 1000;
+            animation: welcomeSlide 2s forwards;
+            animation-delay: 2.5s;
         }
-
-        .logo-container {
-            text-align: center;
-            margin-bottom: 30px;
+        
+        @keyframes welcomeSlide {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
         }
-
-        .logo {
+        
+        .welcome-text {
             font-size: 4.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+            font-weight: 900;
+            text-align: center;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: pulse 2s infinite alternate;
+            animation: colorShift 3s infinite alternate, textPulse 2s infinite;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
         }
-
-        .subtitle {
-            font-size: 1.5rem;
-            margin-top: 10px;
-            color: #e6e6e6;
-            font-weight: 300;
-            letter-spacing: 2px;
+        
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
-
-        .loading-bar {
-            width: 300px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 30px;
+        
+        @keyframes textPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-
-        .loading-progress {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ff9a9e, #fad0c4, #a1c4fd);
-            border-radius: 10px;
-            animation: loading 3s ease-in-out forwards;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
-        }
-
-        @keyframes loading {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        /* Main Content */
-        #main-content {
-            display: none;
-            padding: 30px;
-            max-width: 1400px;
+        
+        /* Sehemu kuu ya ukurasa */
+        .main-container {
+            padding: 2rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
-
-        .header {
+        
+        /* Heading ya juu ya ukurasa */
+        .header-title {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-        }
-
-        .header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a1c4fd);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        }
-
-        .header p {
-            font-size: 1.3rem;
-            color: #e6e6e6;
-        }
-
-        /* Channels Section */
-        .channels-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-
-        .channel {
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 3.5rem;
+            margin: 3rem 0;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
         }
-
-        .channel:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            animation: gradientShift 3s ease infinite, glow 1.5s ease-in-out infinite alternate;
-        }
-
-        .channel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.7s;
-        }
-
-        .channel:hover::before {
-            left: 100%;
-        }
-
-        .channel i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            z-index: 2;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        .channel h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            z-index: 2;
-            text-shadow: 0 0 5px rgba(255,255,255,0.3);
-        }
-
-        .channel p {
-            font-size: 1rem;
-            color: #e6e6e6;
-            z-index: 2;
-            text-shadow: 0 0 5px rgba(0,0,0,0.3);
-        }
-
-        .bofya-btn {
+        
+        .header-title span {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            margin-top: 15px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            z-index: 2;
-            backdrop-filter: blur(10px);
-            text-shadow: 0 0 5px rgba(0,0,0,0.3);
-        }
-
-        .bofya-btn:hover {
-            background: rgba(255, 255, 255, 0.5);
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
-            to { box-shadow: 0 0 30px rgba(255,255,255,0.6); }
-        }
-
-        /* Individual channel animations */
-        .channel:nth-child(1) { animation-delay: 0s; }
-        .channel:nth-child(2) { animation-delay: 0.5s; }
-        .channel:nth-child(3) { animation-delay: 1s; }
-        .channel:nth-child(4) { animation-delay: 1.5s; }
-        .channel:nth-child(5) { animation-delay: 2s; }
-        .channel:nth-child(6) { animation-delay: 2.5s; }
-        .channel:nth-child(7) { animation-delay: 3s; }
-        .channel:nth-child(8) { animation-delay: 3.5s; }
-        .channel:nth-child(9) { animation-delay: 4s; }
-        .channel:nth-child(10) { animation-delay: 4.5s; }
-
-        /* Contacts Section */
-        .contacts-section {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            max-width: 800px;
-            margin: 0 auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: linear-gradient(45deg, rgba(255,107,107,0.1), rgba(78,205,196,0.1), rgba(69,183,209,0.1));
-            background-size: 400% 400%;
-            animation: gradientShift 10s ease infinite;
-        }
-
-        .contacts-section h2 {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a1c4fd);
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4, #45b7d1);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+            position: relative;
+            animation: slideIn 10s linear infinite;
         }
-
-        .contacts-grid {
+        
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Channel nne */
+        .channels-section {
+            margin: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: #4ecdc4;
+            text-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        }
+        
+        .channels-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            gap: 2rem;
         }
-
-        .contact-card {
-            background: rgba(255, 255, 255, 0.1);
+        
+        .channel-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .channel-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #4ecdc4;
+        }
+        
+        .channel-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .channel-name {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #feca57;
+        }
+        
+        .channel-description {
+            color: #aaa;
+            line-height: 1.5;
+        }
+        
+        /* Namba za Maadmin */
+        .admins-section {
+            margin: 4rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .admin-card {
+            background: rgba(22, 33, 62, 0.7);
             border-radius: 15px;
-            padding: 25px;
+            padding: 1.8rem;
             text-align: center;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            background: linear-gradient(45deg, rgba(255,107,107,0.2), rgba(78,205,196,0.2), rgba(69,183,209,0.2));
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
         }
-
-        .contact-card:hover {
-            transform: translateY(-5px) scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-            animation: gradientShift 5s ease infinite, glow 2s ease-in-out infinite alternate;
+        
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
-
-        .contact-card i {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(255,204,0,0.5);
+        
+        .admin-name {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
         }
-
-        .contact-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #ffcc00;
-            text-shadow: 0 0 5px rgba(255,204,0,0.3);
+        
+        .admin-phone {
+            font-size: 1.3rem;
+            color: #4ecdc4;
+            direction: ltr;
         }
-
-        .contact-card p {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-            text-shadow: 0 0 3px rgba(0,0,0,0.3);
-        }
-
-        .contact-role {
-            font-size: 1rem;
-            color: #e6e6e6;
+        
+        .admin-role {
+            color: #feca57;
+            margin-top: 0.5rem;
             font-style: italic;
-            margin-bottom: 15px;
-            text-shadow: 0 0 3px rgba(0,0,0,0.3);
         }
-
-        .contact-bofya {
-            display: inline-block;
-            background: linear-gradient(45deg, #25D366, #128C7E);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
-            text-shadow: 0 0 5px rgba(0,0,0,0.3);
-        }
-
-        .contact-bofya:hover {
-            background: linear-gradient(45deg, #128C7E, #25D366);
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
-        }
-
-        /* Music Player */
-        .music-player {
+        
+        /* Particles zikishuka */
+        .particles-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            z-index: 10;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: linear-gradient(45deg, rgba(255,107,107,0.2), rgba(78,205,196,0.2));
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
         }
-
-        .music-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        
+        .particle {
+            position: absolute;
+            background: linear-gradient(to bottom, transparent, rgba(78, 205, 196, 0.8));
+            border-radius: 50%;
+            animation: fall linear infinite;
+            filter: blur(1px);
         }
-
-        .music-controls button {
-            background: none;
-            border: none;
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        
+        /* Footer na controls za muziki */
+        .footer {
+            margin-top: 5rem;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .music-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .play-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
             color: white;
-            font-size: 1.2rem;
+            border: none;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            font-size: 1.8rem;
             cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
             transition: all 0.3s ease;
-            text-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
-
-        .music-controls button:hover {
-            color: #ff9a9e;
-            transform: scale(1.2);
-            text-shadow: 0 0 10px rgba(255,154,158,0.5);
+        
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.6);
         }
-
-        /* Responsive Design */
+        
+        .song-title {
+            color: #4ecdc4;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .logo {
+            .welcome-text {
                 font-size: 2.8rem;
             }
             
-            .subtitle {
-                font-size: 1.2rem;
+            .header-title {
+                font-size: 2.5rem;
             }
             
-            .channels-container {
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .channels-grid, .admins-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .contacts-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contacts-section {
-                padding: 25px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Particle Container -->
-    <div id="particles-js"></div>
-
-    <!-- Welcome Screen -->
-    <div id="welcome-screen">
-        <div class="logo-container">
-            <div class="logo">𝐊𝐀𝐑𝐈𝐁𝐔 𝐒𝐀𝐍𝐀.</div>
-            <div class="subtitle">𝐏𝐥𝐞𝐚𝐬𝐞 𝐰𝐚𝐢𝐭.....</div>
-        </div>
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
-        </div>
+    <!-- Skrini ya kuanzia -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <h1 class="welcome-text">KARIBU KATIKA UKURASA WA JAY SIMULIZI</h1>
     </div>
-
-    <!-- Main Content -->
-    <div id="main-content">
-        <div class="header">
-            <h1>𝐎𝐓𝐇𝐄𝐑 𝐂𝐇𝐀𝐍𝐍𝐄𝐋𝐒</h1>
-            <p>𝐘𝐨'𝐚𝐫𝐞 𝐦𝐨𝐬𝐭 𝐰𝐞𝐥𝐜𝐨𝐦𝐞</p>
-        </div>
-
-        <!-- Channels Section -->
-        <div class="channels-container">
-            <div class="channel">
-                <i class="fas fa-laugh"></i>
-                <h3>Cheka_Tu</h3>
-                <p>Latest laugh</p>
-                <a href="https://whatsapp.com/channel/0029VaiMm7d4yltT51HS1T1G" target="_blank" class="bofya-btn">Bofya</a>
-           
-            </div>
-            <div class="channel">
-                <i class="fas fa-heart"></i>
-                <h3>Love story</h3>
-                <p>let's enjoy</p>
-                <a href="https://whatsapp.com/channel/0029Vb604ih90x2rONCv5B3Q" target="_blank" class="bofya-btn">Bofya</a>                          </div>
-            <div class="channel">
-                <i class="fas fa-film"></i>
-                <h3>Boniphace memes</h3>
-                <p>let's enjoy</p>
-                <a href="https://whatsapp.com/channel/0029Vb7Juvs9cDDfVQyX4z36" target="_blank" class="bofya-btn">Bofya</a>                                                                     </div>
-            <div class="channel">
-                <i class="fas fa-"></i>
-                <h3>Group la whatsapp</h3>
-                <p>let's chat here</p>
-                <a href="https://chat.whatsapp.com/KmedXB1DQR2ENEHgj48QgC?mode=wwt" target="_blank" class="bofya-btn">Bofya</a>                                                  
-        </div>
-
-        <!-- Contacts Section -->
-        <div class="contacts-section">
-            <h2>Channel Admins</h2>
-            <div class="contacts-grid">
-                <div class="contact-card">
-                    <i class="fas fa-user-tie"></i>
-                    <h3>Boniphace M.</h3>
-                    <p>+255794373476</p>
-                    <p class="contact-role">Channel Admin</p>
-                    <a href="https://wa.me/255794373476" target="_blank" class="contact-bofya">Bofya</a>
+    
+    <!-- Sehemu kuu -->
+    <div class="main-container">
+        <!-- Heading ya juu ya ukurasa -->
+        <h1 class="header-title">
+            <span>WELCOME TO JAY SIMULIZI</span>
+        </h1>
+        
+        <!-- Channel nne -->
+        <section class="channels-section">
+            <h2 class="section-title">CHANELI ZETU ZA SIMULIZI</h2>
+            <div class="channels-grid">
+                <div class="channel-card">
+                    <div class="channel-icon">📖</div>
+                    <h3 class="channel-name">Hadithi za Kale</h3>
+                    <p class="channel-description">Simulizi za kienyeji na tamaduni za asili za Afrika Mashariki</p>
                 </div>
-                <div class="contact-card">
-                    <i class="fas fa-user-cog"></i>
-                    <h3>Devine</h3>
-                    <p>+255 748 840 168</p>
-                    <p class="contact-role">Channel Admin</p>
-                    <a href="https://wa.me/255748840168" target="_blank" class="contact-bofya">Bofya</a>
+                
+                <div class="channel-card">
+                    <div class="channel-icon">✨</div>
+                    <h3 class="channel-name">Ngano za Kisasa</h3>
+                    <p class="channel-description">Hadithi zilizounganisha tamaduni na maisha ya kisasa</p>
                 </div>
-                <div class="contact-card">
-                    <i class="fas fa-user-headset"></i>
-                    <h3>Yassin dk.</h3>
-                    <p>+255 621 995 482</p>
-                    <p class="contact-role">Channel Admin</p>
-                    <a href="https://wa.me/255621995482" target="_blank" class="contact-bofya">Bofya</a>
+                
+                <div class="channel-card">
+                    <div class="channel-icon">🏮</div>
+                    <h3 class="channel-name">Mithali na Hekima</h3>
+                    <p class="channel-description">Mafunzo na mawaidha kutoka kwa babu na bibi zetu</p>
                 </div>
-                <div class="contact-card">
-                    <i class="fas fa-user-edit"></i>
-                    <h3>Website Owner.</h3>
-                    <p>255794373476</p>
-                    <p class="contact-role">Website Creator</p>
-                    <a href="https://wa.me/255794373476" target="_blank" class="contact-bofya">Bofya</a>
+                
+                <div class="channel-card">
+                    <div class="channel-icon">🌙</div>
+                    <h3 class="channel-name">Usiku wa Simulizi</h3>
+                    <p class="channel-description">Hadithi za kutisha na za kusisimua za usiku wa manane</p>
                 </div>
             </div>
-        </div>
+        </section>
+        
+        <!-- Namba za Maadmin -->
+        <section class="admins-section">
+            <h2 class="section-title">WATAWALA WA JAY SIMULIZI</h2>
+            <div class="admins-grid">
+                <div class="admin-card">
+                    <h3 class="admin-name">JAY MZEE</h3>
+                    <div class="admin-phone">+255 789 123 456</div>
+                    <div class="admin-role">Mkurugenzi Mkuu</div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="admin-name">Bibi ASHA</h3>
+                    <div class="admin-phone">+255 755 987 654</div>
+                    <div class="admin-role">Msimulizi Mkuu</div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="admin-name">Bwana THABITI</h3>
+                    <div class="admin-phone">+255 713 456 789</div>
+                    <div class="admin-role">Mtunza Tamaduni</div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="admin-name">Mwanamvua</h3>
+                    <div class="admin-phone">+255 762 111 222</div>
+                    <div class="admin-role">Mwandishi wa Hadithi</div>
+                </div>
+            </div>
+        </section>
     </div>
-
-    <!-- Music Player -->
-    <div class="music-player">
-        <div class="music-info">
-            <i class="fas fa-music"></i>
-            <span>Now Playing: Boniphace Theme</span>
-        </div>
+    
+    <!-- Footer na controls za muziki -->
+    <footer class="footer">
         <div class="music-controls">
-            <button id="play-pause-btn"><i class="fas fa-play"></i></button>
-            <button id="mute-btn"><i class="fas fa-volume-up"></i></button>
+            <button class="play-btn" id="playBtn">▶️</button>
+            <div class="song-title">Wimbo wa Jay Simulizi</div>
         </div>
-    </div>
-
-    <!-- Audio Element -->
-    <audio id="background-music" loop>
-        <source src="https://files.catbox.moe/mlhty3.mp3" type="audio/mpeg">
+        <div class="copyright">
+            © 2023 JAY SIMULIZI. Haki zote zimehifadhiwa. | Ukurasa wa Ngano na Hadithi
+        </div>
+    </footer>
+    
+    <!-- Container ya particles -->
+    <div class="particles-container" id="particlesContainer"></div>
+    
+    <!-- Audio element -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://files.catbox.moe/ggcpcm.mp3" type="audio/mpeg">
+        Kivinjari chako hakiwezi kucheza sauti hii.
     </audio>
-
-    <!-- Particle.js Library -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <script>
-        // Wait for the page to load
-        window.addEventListener('load', function() {
-            const welcomeScreen = document.getElementById('welcome-screen');
-            const mainContent = document.getElementById('main-content');
-            const audio = document.getElementById('background-music');
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            const muteBtn = document.getElementById('mute-btn');
-            const channels = document.querySelectorAll('.channel');
+        // Kusimamia ukurasa kuanza
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const playBtn = document.getElementById('playBtn');
+            const audio = document.getElementById('backgroundMusic');
+            const particlesContainer = document.getElementById('particlesContainer');
             
-            // Initialize particles
-            particlesJS('particles-js', {
-                particles: {
-                    number: {
-                        value: 80,
-                        density: {
-                            enable: true,
-                            value_area: 800
-                        }
-                    },
-                    color: {
-                        value: "#ffffff"
-                    },
-                    shape: {
-                        type: "circle",
-                        stroke: {
-                            width: 0,
-                            color: "#000000"
-                        }
-                    },
-                    opacity: {
-                        value: 0.5,
-                        random: true,
-                        anim: {
-                            enable: true,
-                            speed: 1,
-                            opacity_min: 0.1,
-                            sync: false
-                        }
-                    },
-                    size: {
-                        value: 3,
-                        random: true,
-                        anim: {
-                            enable: true,
-                            speed: 2,
-                            size_min: 0.1,
-                            sync: false
-                        }
-                    },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#ffffff",
-                        opacity: 0.4,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 2,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false,
-                        attract: {
-                            enable: false,
-                            rotateX: 600,
-                            rotateY: 1200
-                        }
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: {
-                            enable: true,
-                            mode: "repulse"
-                        },
-                        onclick: {
-                            enable: true,
-                            mode: "push"
-                        },
-                        resize: true
-                    },
-                    modes: {
-                        grab: {
-                            distance: 400,
-                            line_linked: {
-                                opacity: 1
-                            }
-                        },
-                        bubble: {
-                            distance: 400,
-                            size: 40,
-                            duration: 2,
-                            opacity: 8,
-                            speed: 3
-                        },
-                        repulse: {
-                            distance: 200,
-                            duration: 0.4
-                        },
-                        push: {
-                            particles_nb: 4
-                        },
-                        remove: {
-                            particles_nb: 2
-                        }
-                    }
-                },
-                retina_detect: true
-            });
-            
-            // Auto-play music after a delay
-            setTimeout(function() {
-                audio.volume = 0.5;
-                audio.play().catch(e => console.log("Autoplay prevented:", e));
-            }, 2000);
-            
-            // After loading animation completes, show main content
-            setTimeout(function() {
-                welcomeScreen.style.opacity = '0';
-                welcomeScreen.style.transform = 'scale(1.2)';
+            // Kuunda particles
+            function createParticles() {
+                // Ondoa particles zilizopo
+                particlesContainer.innerHTML = '';
                 
-                setTimeout(function() {
-                    welcomeScreen.style.display = 'none';
-                    mainContent.style.display = 'block';
+                // Idadi ya particles
+                const particleCount = 80;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    // Kuunda particle mpya
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
                     
-                    // Add entrance animation for channels
-                    channels.forEach((channel, index) => {
-                        setTimeout(() => {
-                            channel.style.opacity = '0';
-                            channel.style.transform = 'translateY(20px)';
-                            channel.style.transition = 'all 0.5s ease';
-                            
-                            setTimeout(() => {
-                                channel.style.opacity = '1';
-                                channel.style.transform = 'translateY(0)';
-                            }, 100);
-                        }, index * 100);
-                    });
-                }, 1500);
-            }, 3000);
+                    // Ukubwa wa bahati nasibu
+                    const size = Math.random() * 15 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Nafasi ya kuanzia (juu ya skrini)
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    
+                    // Rangi tofauti
+                    const colors = [
+                        'rgba(78, 205, 196, 0.8)',  // Cyan
+                        'rgba(255, 107, 107, 0.8)',  // Pink
+                        'rgba(254, 202, 87, 0.8)',   // Yellow
+                        'rgba(150, 206, 180, 0.8)'   // Green
+                    ];
+                    
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.background = `linear-gradient(to bottom, transparent, ${color})`;
+                    
+                    // Muda wa animation
+                    const duration = Math.random() * 10 + 10;
+                    particle.style.animationDuration = `${duration}s`;
+                    
+                    // Kuchelewesha animation
+                    const delay = Math.random() * 5;
+                    particle.style.animationDelay = `${delay}s`;
+                    
+                    // Ongeza particle kwenye container
+                    particlesContainer.appendChild(particle);
+                }
+            }
             
-            // Music controls
-            playPauseBtn.addEventListener('click', function() {
+            // Anza kuunda particles
+            createParticles();
+            
+            // Rudia kuunda particles kila baada ya sekunde 20
+            setInterval(createParticles, 20000);
+            
+            // Kusimamia kitufe cha kucheza muziki
+            playBtn.addEventListener('click', function() {
                 if (audio.paused) {
                     audio.play();
-                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    playBtn.innerHTML = "⏸️";
+                    playBtn.style.background = "linear-gradient(45deg, #feca57, #ff6b6b)";
                 } else {
                     audio.pause();
-                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    playBtn.innerHTML = "▶️";
+                    playBtn.style.background = "linear-gradient(45deg, #ff6b6b, #feca57)";
                 }
             });
             
-            muteBtn.addEventListener('click', function() {
-                if (audio.muted) {
-                    audio.muted = false;
-                    muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                } else {
-                    audio.muted = true;
-                    muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                }
-            });
+            // Ongeza miongozo ya kucheza muziki kiotomatiki baada ya sekunde 3
+            setTimeout(() => {
+                audio.play().then(() => {
+                    playBtn.innerHTML = "⏸️";
+                    playBtn.style.background = "linear-gradient(45deg, #feca57, #ff6b6b)";
+                }).catch(error => {
+                    console.log("Muziki haujaweza kuanza kiotomatiki. Bofya kitufe cha kucheza.");
+                });
+            }, 3000);
         });
     </script>
 </body>
